@@ -58,7 +58,9 @@ public class Post {
             return false;
         }
         Post post = (Post) o;
-        return id == post.id && Objects.equals(name, post.name) && Objects.equals(decription, post.decription) && Objects.equals(created, post.created);
+        return id == post.id && Objects.equals(name, post.name)
+                && Objects.equals(decription, post.decription)
+                && Objects.equals(created, post.created);
     }
 
     @Override
