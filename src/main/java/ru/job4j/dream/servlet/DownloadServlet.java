@@ -15,7 +15,7 @@ public class DownloadServlet extends HttpServlet {
         String name = req.getParameter("name");
         File downloadFile = null;
         for (File file : new File("c:\\images\\").listFiles()) {
-            if (name.equals(file.getName())) {
+            if (name.equals(file.getName().split("\\.")[0])) {
                 downloadFile = file;
                 break;
             }

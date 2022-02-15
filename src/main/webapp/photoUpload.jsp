@@ -1,5 +1,4 @@
 <%@ page language="java" pageEncoding="UTF-8" session="true"%>
-<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +18,7 @@
         </tr>
         </thead>
         <tbody>
-        <form action="<%=request.getContextPath()%>/photoupload?name=<%=request.getParameter("name")%>" method="post">
+        <form action="<%=request.getContextPath()%>/photoupload?name=<%=request.getParameter("name")%>" method="post" enctype="multipart/form-data">
             <div class="checkbox">
                 <input type="file" name="file">
             </div>

@@ -4,8 +4,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import ru.job4j.dream.store.Store;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,8 +26,8 @@ public class PhotoUploadServlet extends HttpServlet {
             images.add(name.getName());
         }
         req.setAttribute("images", images);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/candidates.do");
-        dispatcher.forward(req, resp);
+        req.setAttribute("candidates", Store.instOf().findAllCandidates());
+        req.getRequestDispatcher("candidates.jsp").forward(req, resp);
     }
 
     @Override
@@ -37,6 +37,7 @@ public class PhotoUploadServlet extends HttpServlet {
         ServletContext servletContext = this.getServletConfig().getServletContext();
         File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
         factory.setRepository(repository);
+        String name = req.getParameter("name");
         ServletFileUpload upload = new ServletFileUpload(factory);
         try {
             List<FileItem> items = upload.parseRequest(req);
@@ -46,7 +47,8 @@ public class PhotoUploadServlet extends HttpServlet {
             }
             for (FileItem item : items) {
                 if (!item.isFormField()) {
-                    File file = new File(folder + File.separator + req.getParameter("name"));
+                    String[] strings  = item.getName().split("\\.");
+                    File file = new File(folder + File.separator + name + "." + strings[1]);
                     try (FileOutputStream out = new FileOutputStream(file)) {
                         out.write(item.getInputStream().readAllBytes());
                     }
