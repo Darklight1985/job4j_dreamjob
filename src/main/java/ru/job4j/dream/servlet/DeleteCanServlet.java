@@ -1,5 +1,6 @@
 package ru.job4j.dream.servlet;
 
+import ru.job4j.dream.SourcePath;
 import ru.job4j.dream.store.Store;
 
 import javax.servlet.ServletException;
@@ -13,7 +14,7 @@ public class DeleteCanServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        for (File name : new File("c:\\images\\").listFiles()) {
+        for (File name : new File(SourcePath.StringImages.give()).listFiles()) {
             if (name.getName().split("\\.")[0].equals(req.getParameter("name"))) {
                 name.delete();
             }
