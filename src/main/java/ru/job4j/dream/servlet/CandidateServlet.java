@@ -2,6 +2,7 @@ package ru.job4j.dream.servlet;
 
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
+import ru.job4j.dream.store.MemStore;
 import ru.job4j.dream.store.Store;
 
 import javax.servlet.ServletException;
@@ -15,7 +16,7 @@ public class CandidateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.setAttribute("candidates", Store.instOf().findAllCandidates());
+        req.setAttribute("candidates", MemStore.instOf().findAllCandidates());
         req.getRequestDispatcher("candidates.jsp").forward(req, resp);
 
     }
@@ -24,7 +25,7 @@ public class CandidateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        Store.instOf().save(
+        MemStore.instOf().save(
                 new Candidate(
                         Integer.valueOf(req.getParameter("id")),
                 req.getParameter("name")
@@ -37,7 +38,7 @@ public class CandidateServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        Store.instOf().deleteCan(Integer.parseInt(req.getParameter("name")));
+        MemStore.instOf().deleteCan(Integer.parseInt(req.getParameter("name")));
         resp.sendRedirect(req.getContextPath() + "/candidates.do");
     }
 }

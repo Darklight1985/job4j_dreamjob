@@ -4,6 +4,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import ru.job4j.dream.store.MemStore;
 import ru.job4j.dream.store.Store;
 
 import javax.servlet.ServletContext;
@@ -26,7 +27,7 @@ public class PhotoUploadServlet extends HttpServlet {
             images.add(name.getName());
         }
         req.setAttribute("images", images);
-        req.setAttribute("candidates", Store.instOf().findAllCandidates());
+        req.setAttribute("candidates", MemStore.instOf().findAllCandidates());
         req.getRequestDispatcher("candidates.jsp").forward(req, resp);
     }
 

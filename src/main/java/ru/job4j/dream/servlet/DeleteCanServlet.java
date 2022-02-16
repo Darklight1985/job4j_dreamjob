@@ -1,6 +1,7 @@
 package ru.job4j.dream.servlet;
 
 import ru.job4j.dream.SourcePath;
+import ru.job4j.dream.store.MemStore;
 import ru.job4j.dream.store.Store;
 
 import javax.servlet.ServletException;
@@ -19,7 +20,7 @@ public class DeleteCanServlet extends HttpServlet {
                 name.delete();
             }
         }
-        Store.instOf().deleteCan(Integer.parseInt(req.getParameter("name")));
+        MemStore.instOf().deleteCan(Integer.parseInt(req.getParameter("name")));
         resp.sendRedirect(req.getContextPath() + "/candidates.do");
     }
 }
