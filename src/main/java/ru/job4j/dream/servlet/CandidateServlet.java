@@ -37,7 +37,7 @@ public class CandidateServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        Store.instOf().deleteCan(Integer.parseInt(req.getParameter("id")));
+        Store.instOf().deleteCan(Integer.parseInt(req.getParameter("name")));
         resp.sendRedirect(req.getContextPath() + "/candidates.do");
     }
 }

@@ -36,7 +36,7 @@ public class Store {
     }
 
     public void deleteCan(int id) {
-        candidates.remove(candidateId.decrementAndGet());
+        candidates.remove(candidateId.get());
     }
 
     public Post findById(int id) {
