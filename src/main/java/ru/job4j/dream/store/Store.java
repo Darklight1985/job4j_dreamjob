@@ -13,8 +13,8 @@ public class Store {
 
     private static final Store INST = new Store();
 
-    private static AtomicInteger postId = new AtomicInteger(4);
-    private static AtomicInteger candidateId = new AtomicInteger(4);
+    private static AtomicInteger postId = new AtomicInteger(3);
+    private static AtomicInteger candidateId = new AtomicInteger(3);
     private final Map<Integer, Post> posts = new ConcurrentHashMap<>();
 
     private Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
@@ -33,6 +33,10 @@ public class Store {
             post.setId(postId.incrementAndGet());
         }
         posts.put(post.getId(), post);
+    }
+
+    public void deleteCan(int id) {
+        candidates.remove(candidateId.decrementAndGet());
     }
 
     public Post findById(int id) {
