@@ -59,4 +59,17 @@ public class PhotoUploadServlet extends HttpServlet {
         }
         doGet(req, resp);
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        for (File name : new File("c:\\images\\").listFiles()) {
+            System.out.println(name);
+            System.out.println(req.getParameter("name"));
+            if (name.getName().equals(req.getParameter("name"))) {
+                name.delete();
+            }
+        }
+        doGet(req, resp);
+    }
 }
