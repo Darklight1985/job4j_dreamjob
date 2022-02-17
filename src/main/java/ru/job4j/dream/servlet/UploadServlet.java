@@ -4,7 +4,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import ru.job4j.dream.SourcePath;
+import ru.job4j.dream.store.SourcePath;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -18,14 +18,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.job4j.dream.SourcePath.StringImages.*;
-
 public class UploadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         List<String> images = new ArrayList<>();
-        for (File name : new File(SourcePath.StringImages.give()).listFiles()) {
+        for (File name : new File(SourcePath.getInstance().give()).listFiles()) {
             images.add(name.getName());
         }
         req.setAttribute("images", images);
@@ -43,7 +41,7 @@ public class UploadServlet extends HttpServlet {
         ServletFileUpload upload = new ServletFileUpload(factory);
         try {
             List<FileItem> items = upload.parseRequest(req);
-            File folder = new File(SourcePath.StringImages.give());
+            File folder = new File(SourcePath.getInstance().give());
             if (!folder.exists()) {
                 folder.mkdir();
             }
