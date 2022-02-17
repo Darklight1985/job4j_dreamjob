@@ -15,15 +15,26 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class PhotoUploadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        Properties properties = new Properties();
+        InputStream in = PhotoUploadServlet.class.getClassLoader()
+                .getResourceAsStream("Resource.properties");
+        try {
+            properties.load(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         List<String> images = new ArrayList<>();
-        for (File name : new File("c:\\images\\").listFiles()) {
+        for (File name : new File(properties.getProperty("pathToDir")).listFiles()) {
+            System.out.println(name.getName());
             images.add(name.getName());
         }
         req.setAttribute("images", images);
@@ -40,9 +51,17 @@ public class PhotoUploadServlet extends HttpServlet {
         factory.setRepository(repository);
         String name = req.getParameter("name");
         ServletFileUpload upload = new ServletFileUpload(factory);
+        Properties properties = new Properties();
+        InputStream in = PhotoUploadServlet.class.getClassLoader()
+                .getResourceAsStream("Resource.properties");
+        try {
+            properties.load(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         try {
             List<FileItem> items = upload.parseRequest(req);
-            File folder = new File("c:\\images\\");
+            File folder = new File(properties.getProperty("pathToDir"));
             if (!folder.exists()) {
                 folder.mkdir();
             }
@@ -57,17 +76,6 @@ public class PhotoUploadServlet extends HttpServlet {
             }
         } catch (FileUploadException e) {
             e.printStackTrace();
-        }
-        doGet(req, resp);
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        for (File name : new File("c:\\images\\").listFiles()) {
-            if (name.getName().equals(req.getParameter("name"))) {
-                name.delete();
-            }
         }
         doGet(req, resp);
     }
