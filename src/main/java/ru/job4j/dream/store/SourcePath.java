@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class SourcePath {
-   private String pathToImages;
+   private static String pathToImages;
 
     private SourcePath() {
         Properties properties = new Properties();
@@ -21,15 +21,8 @@ public class SourcePath {
         this.pathToImages = properties.getProperty("pathToDir");
     }
 
-  private static class SourcePathHolder {
-        public static final SourcePath HOLDER_INSTANCE = new SourcePath();
-  }
-
-        public static SourcePath getInstance() {
-            return SourcePathHolder.HOLDER_INSTANCE;
-        }
-
-    public String give() {
-        return this.pathToImages;
+    public static String give() {
+        new SourcePath();
+        return pathToImages;
     }
 }

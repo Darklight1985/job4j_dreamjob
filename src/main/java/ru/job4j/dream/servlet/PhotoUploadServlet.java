@@ -23,7 +23,7 @@ public class PhotoUploadServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         List<String> images = new ArrayList<>();
-        for (File name : new File(SourcePath.getInstance().give()).listFiles()) {
+        for (File name : new File(SourcePath.give()).listFiles()) {
             System.out.println(name.getName());
             images.add(name.getName());
         }
@@ -43,7 +43,7 @@ public class PhotoUploadServlet extends HttpServlet {
         ServletFileUpload upload = new ServletFileUpload(factory);
         try {
             List<FileItem> items = upload.parseRequest(req);
-            File folder = new File(SourcePath.getInstance().give());
+            File folder = new File(SourcePath.give());
             if (!folder.exists()) {
                 folder.mkdir();
             }

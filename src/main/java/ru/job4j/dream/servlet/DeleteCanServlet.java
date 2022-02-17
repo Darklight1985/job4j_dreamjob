@@ -9,16 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class DeleteCanServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        System.out.println(SourcePath.getInstance().give());
-        for (File name : new File(SourcePath.getInstance().give()).listFiles()) {
-            System.out.println(name.getName());
+        System.out.println(SourcePath.give());
+        for (File name : new File(SourcePath.give()).listFiles()) {
             if (name.getName().split("\\.")[0].equals(req.getParameter("name"))) {
-                name.delete();
+                Files.deleteIfExists(Paths.get((name.getAbsolutePath())));
             }
         }
         MemStore.instOf().deleteCan(Integer.parseInt(req.getParameter("name")));
