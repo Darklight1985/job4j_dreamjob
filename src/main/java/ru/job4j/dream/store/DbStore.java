@@ -195,7 +195,7 @@ public class DbStore implements Store {
         return null;
     }
 
-    public Candidate findByIdCan(int id) {
+    public Candidate findCanById(int id) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidate WHERE id = ?")
         ) {
