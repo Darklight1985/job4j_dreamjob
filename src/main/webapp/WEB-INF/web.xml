@@ -55,6 +55,11 @@
     <servlet-class>ru.job4j.dream.servlet.LogoutServlet</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>RegServlet</servlet-name>
+    <servlet-class>ru.job4j.dream.servlet.RegServlet</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>PostServlet</servlet-name>
     <url-pattern>/posts.do</url-pattern>
@@ -100,6 +105,11 @@
     <url-pattern>/logout.do</url-pattern>
   </servlet-mapping>
 
+  <servlet-mapping>
+    <servlet-name>RegServlet</servlet-name>
+    <url-pattern>/reg.do</url-pattern>
+  </servlet-mapping>
+
   <filter>
     <filter-name>AuthFilter</filter-name>
     <filter-class>ru.job4j.dream.filter.AuthFilter</filter-class>
@@ -109,4 +119,6 @@
     <filter-name>AuthFilter</filter-name>
     <url-pattern>*.do</url-pattern>
   </filter-mapping>
+
+
 </web-app>
