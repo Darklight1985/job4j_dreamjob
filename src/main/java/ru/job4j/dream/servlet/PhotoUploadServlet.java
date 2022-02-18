@@ -25,7 +25,6 @@ public class PhotoUploadServlet extends HttpServlet {
             throws ServletException, IOException {
         List<String> images = new ArrayList<>();
         for (File name : new File(SourcePath.give()).listFiles()) {
-            System.out.println(name.getName());
             images.add(name.getName());
         }
         req.setAttribute("images", images);
