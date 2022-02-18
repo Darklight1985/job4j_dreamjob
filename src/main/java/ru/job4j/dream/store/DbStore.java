@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.job4j.dream.model.User;
 
 public class DbStore implements Store {
 
@@ -89,6 +90,11 @@ public class DbStore implements Store {
         return candidates;
     }
 
+    @Override
+    public Collection<User> findAllUsers() {
+        return null;
+    }
+
     public void save(Post post) {
         if (post.getId() == 0) {
             create(post);
@@ -102,6 +108,15 @@ public class DbStore implements Store {
             create(candidate);
         } else {
             update(candidate);
+        }
+    }
+
+    @Override
+    public void save(User user) {
+        if (user.getId() == 0) {
+            create(user);
+        } else {
+            update(user);
         }
     }
 
@@ -147,6 +162,28 @@ public class DbStore implements Store {
         return candidate;
     }
 
+    private User create(User user) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =
+                     cn.prepareStatement(
+                             "INSERT INTO users(name, email, password) VALUES (?, ?, ?)",
+                             PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.execute();
+            try (ResultSet id = ps.getGeneratedKeys()) {
+                if (id.next()) {
+                    user.setId(id.getInt(1));
+                }
+            }
+        } catch (Exception e) {
+            LOG.debug("Exception: ", e.toString());
+        }
+        return user;
+    }
+
     private void update(Post post) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =
@@ -173,6 +210,23 @@ public class DbStore implements Store {
         ) {
             ps.setString(1, candidate.getName());
             ps.setInt(2, candidate.getId());
+            ps.execute();
+        } catch (Exception e) {
+            LOG.debug("Exception: ", e.toString());
+        }
+    }
+
+    private void update(User user) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =
+                     cn.prepareStatement(
+                             "UPDATE users SET name = ?, email = ?, password =?"
+                                     + " WHERE id = ?")
+        ) {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.setInt(4, user.getId());
             ps.execute();
         } catch (Exception e) {
             LOG.debug("Exception: ", e.toString());
@@ -211,6 +265,28 @@ public class DbStore implements Store {
         return null;
     }
 
+    @Override
+    public User findUserById(int id) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM users WHERE id = ?")
+        ) {
+            ps.setInt(1, id);
+            try (ResultSet it = ps.executeQuery()) {
+                if (it.next()) {
+                    User user = new User();
+                    user.setId(it.getInt("id"));
+                    user.setName(it.getString("name"));
+                    user.setEmail(it.getString("email"));
+                    user.setPassword(it.getString("password"));
+                    return user;
+                }
+            }
+        } catch (Exception e) {
+            LOG.debug("Exception: ", e.toString());
+        }
+        return null;
+    }
+
     public void deletePost(int id) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("DELETE * FROM post WHERE id = ?")
@@ -230,4 +306,16 @@ public class DbStore implements Store {
             LOG.debug("Exception: ", e.toString());
         }
     }
+
+    @Override
+    public void deleteUser(int id) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("DELETE * FROM users WHERE id = ?")
+        ) {
+            ps.setInt(1, id);
+        } catch (Exception e) {
+            LOG.debug("Exception: ", e.toString());
+        }
+    }
+
 }
