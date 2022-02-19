@@ -297,6 +297,7 @@ public class DbStore implements Store {
         } catch (Exception e) {
             LOG.debug("Exception: ", e.toString());
         }
+
         return null;
     }
 
