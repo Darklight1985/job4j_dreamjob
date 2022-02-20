@@ -16,6 +16,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.dream.model.User;
 
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+
 public class DbStore implements Store {
 
     private static final Logger LOG = LoggerFactory.getLogger(DbStore.class.getName());
@@ -113,10 +116,12 @@ public class DbStore implements Store {
 
     @Override
     public void save(User user) {
-        if (user.getId() == 0) {
-            create(user);
-        } else {
-            update(user);
+        if (isNull(findUserByEmail(user.getEmail()))) {
+            if (user.getId() == 0) {
+                create(user);
+            } else {
+                update(user);
+            }
         }
     }
 
@@ -297,7 +302,6 @@ public class DbStore implements Store {
         } catch (Exception e) {
             LOG.debug("Exception: ", e.toString());
         }
-
         return null;
     }
 
