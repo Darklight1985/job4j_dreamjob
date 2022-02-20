@@ -4,6 +4,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import ru.job4j.dream.model.Post;
 import ru.job4j.dream.store.DbStore;
+import ru.job4j.dream.store.MemStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +30,7 @@ public class PostServletTest {
         } catch (ServletException e) {
             e.printStackTrace();
         }
-        Post post = DbStore.instOf().findById(1);
+        Post post = MemStore.instOf().findById(1);
         assertThat(post, notNullValue());
     }
 }
