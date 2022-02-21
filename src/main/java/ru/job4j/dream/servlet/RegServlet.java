@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 public class RegServlet extends HttpServlet {
     @Override
@@ -19,14 +20,13 @@ public class RegServlet extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         String name = req.getParameter("name");
-        User user = new User(0, name, email, password);
-        if (isNull(user)) {
-            req.setAttribute("error", "Введены не все данные");
+        if (nonNull(DbStore.instOf().findUserByEmail(email))) {
+            req.setAttribute("error", "Пользователь с данным паролем уже зарегистрирован");
             req.getRequestDispatcher("reg.jsp").forward(req, resp);
-        } else {
+        }
+            User user = new User(0, name, email, password);
             Store store = DbStore.instOf();
             store.save(user);
             resp.sendRedirect(req.getContextPath() + "/login.jsp");
         }
-    }
 }
