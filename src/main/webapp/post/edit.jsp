@@ -67,6 +67,10 @@
             <label>Имя</label>
             <input type="text" class="form-control" name="name" value="<%=post.getName()%>">
           </div>
+          <div class="form-group">
+            <label>Описание</label>
+            <input type="text" class="form-control" name="description" value="<%=post.getDescription()%>">
+          </div>
           <button type="submit" class="btn btn-primary">Сохранить</button>
         </form>
       </div>

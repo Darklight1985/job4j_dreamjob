@@ -7,13 +7,13 @@ import java.util.Objects;
 public class Post {
     private int id;
     private String name;
-    private String decription;
+    private String description;
     private LocalDateTime created;
 
-    public Post(int id, String name, String decription, LocalDateTime created) {
+    public Post(int id, String name, String description, LocalDateTime created) {
         this.id = id;
         this.name = name;
-        this.decription = decription;
+        this.description = description;
         this.created = created;
     }
 
@@ -33,12 +33,12 @@ public class Post {
         this.name = name;
     }
 
-    public String getDecription() {
-        return decription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDecription(String decription) {
-        this.decription = decription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public LocalDateTime getCreated() {
@@ -59,12 +59,12 @@ public class Post {
         }
         Post post = (Post) o;
         return id == post.id && Objects.equals(name, post.name)
-                && Objects.equals(decription, post.decription)
+                && Objects.equals(description, post.description)
                 && Objects.equals(created, post.created);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, decription, created);
+        return Objects.hash(id, name, description, created);
     }
 }

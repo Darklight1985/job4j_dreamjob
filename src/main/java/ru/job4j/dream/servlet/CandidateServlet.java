@@ -19,7 +19,6 @@ public class CandidateServlet extends HttpServlet {
             throws ServletException, IOException {
         req.setAttribute("candidates", DbStore.instOf().findAllCandidates());
         req.getRequestDispatcher("candidates.jsp").forward(req, resp);
-
     }
 
     @Override
@@ -32,14 +31,6 @@ public class CandidateServlet extends HttpServlet {
                 req.getParameter("name")
                 )
         );
-        resp.sendRedirect(req.getContextPath() + "/candidates.do");
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-        DbStore.instOf().deleteCan(Integer.parseInt(req.getParameter("name")));
         resp.sendRedirect(req.getContextPath() + "/candidates.do");
     }
 }

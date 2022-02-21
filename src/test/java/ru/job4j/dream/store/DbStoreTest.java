@@ -5,7 +5,6 @@ import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;

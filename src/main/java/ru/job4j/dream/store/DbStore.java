@@ -131,7 +131,7 @@ public class DbStore implements Store {
                              PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, post.getName());
-            ps.setString(2, post.getDecription());
+            ps.setString(2, post.getDescription());
             ps.setTimestamp(3, Timestamp.valueOf(post.getCreated()));
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
@@ -195,7 +195,7 @@ public class DbStore implements Store {
                                      + " WHERE id = ?")
         ) {
             ps.setString(1, post.getName());
-            ps.setString(2, post.getDecription());
+            ps.setString(2, post.getDescription());
             ps.setTimestamp(3, Timestamp.valueOf(post.getCreated()));
             ps.setInt(4, post.getId());
             ps.execute();
