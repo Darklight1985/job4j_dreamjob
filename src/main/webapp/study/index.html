@@ -7,6 +7,28 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function validate() {
+           var name = $('#name').val();
+           var surname = $('#surname').val();
+            var description = $('#description').val();
+            var selectedCheckBoxes = document.querySelectorAll('input.form-check-input:checked');
+            var checkedValues = Array.from(selectedCheckBoxes).map(cb => cb.value);
+            if (checkedValues == "") {
+                alert("Выберите пол")
+            }
+           if (name == "") {
+               alert("Введите имя");
+           }
+            if (surname == "") {
+                alert("Введите фамилию");
+            }
+            if (description == "") {
+                alert("Введите описание");
+            }
+            return false;
+        }
+    </script>
 </head>
 <body>
 
@@ -35,7 +57,7 @@
             <label for="description">Description</label>
             <input type="text" class="form-control" id="description">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" onclick="return validate();">Submit</button>
     </form>
 </div>
 
