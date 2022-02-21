@@ -74,7 +74,7 @@
                                 <img src="<c:url value='/download?name=${candidate.id}'/>" width="100px" height="100px"/>
                             </td>
                             <td><a href="<c:url value='/photoUpload.jsp?name=${candidate.id}'/>">Download</a></td>
-                            <td> <form action="<c:url value='/delete'/>" method="delete" enctype="multipart/form-data">
+                            <td> <form action="<c:url value='/delete'/>" enctype="multipart/form-data">
                                 <button type="submit" name="name" value='${candidate.id}' class="btn btn-primary">Delete</button>
                             </form></td>
                         </tr>

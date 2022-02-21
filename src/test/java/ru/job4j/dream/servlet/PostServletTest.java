@@ -70,7 +70,7 @@ public class PostServletTest {
             e.printStackTrace();
         }
     }
-
+@Ignore
     @Test
     public void whenCreateCandidate() throws IOException {
         HttpServletRequest req = mock(HttpServletRequest.class);
