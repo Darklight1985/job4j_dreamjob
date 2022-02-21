@@ -10,11 +10,9 @@ public class User {
 
     public User(int id, String name, String email, String password) {
         this.id = id;
-        if (!email.equals("") || !password.equals("") || !name.equals("")) {
-            this.name = name;
-            this.email = email;
-            this.password = password;
-        }
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 
     public int getId() {

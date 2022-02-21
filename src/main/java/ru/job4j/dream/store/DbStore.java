@@ -116,12 +116,10 @@ public class DbStore implements Store {
 
     @Override
     public void save(User user) {
-        if (isNull(findUserByEmail(user.getEmail()))) {
-            if (user.getId() == 0) {
-                create(user);
-            } else {
-                update(user);
-            }
+        if (user.getId() == 0) {
+            create(user);
+        } else {
+            update(user);
         }
     }
 
