@@ -9,28 +9,34 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
         function addRow() {
-            var name = $('#name').val();
-            var surname = $('#surname').val();
-            var description = $('#description').val();
-            var selectedCheckBoxes = document.querySelectorAll('input.form-check-input:checked');
-            var checkedValues = Array.from(selectedCheckBoxes).map(cb => cb.value);
-            if (checkedValues == "") {
-                alert("Выберите пол")
+            let name = $('#name').val();
+            let surname = $('#surname').val();
+            let description = $('#description').val();
+            let selectedCheckBoxes = document.querySelectorAll('input.form-check-input:checked');
+            let checkedValues = Array.from(selectedCheckBoxes).map(cb => cb.value);
+            let messeng = "Не заполнены следующие данные: \n"
+            let warning = "";
+            if (name === "") {
+                warning += "Имя \n";
             }
-            if (name == "") {
-                alert("Введите имя");
+            if (surname === "") {
+                warning += "Фамилия \n";
             }
-            if (surname == "") {
-                alert("Введите фамилию");
+            if (checkedValues.length === 0) {
+                warning += "Пол \n";
             }
-            if (description == "") {
-                alert("Введите описание");
+            if (description === "") {
+                warning += "Описание \n";
             }
-            $('#table tr:last').after('<tr><td>' + "" +'</td><td>'
-                + name +'</td><td>'
-                + surname +'</td><td>'
-                + checkedValues +'</td><td>'
-                + description +'</td></tr>');
+            if (warning !== "") {
+                alert(messeng + warning +checkedValues);
+            } else {
+                $('#table tr:last').after('<tr><td>' + "" + '</td><td>'
+                    + name + '</td><td>'
+                    + surname + '</td><td>'
+                    + checkedValues + '</td><td>'
+                    + description + '</td></tr>');
+            }
         }
     </script>
 </head>
