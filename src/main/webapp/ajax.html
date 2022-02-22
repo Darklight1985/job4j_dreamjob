@@ -27,7 +27,6 @@
             data: 'name=' + $('#email').val(),
             dataType: 'text'
         }).done(function(data) {
-            mailtext = $('#email').val();
             var elem = document.getElementById("staticEmail");
             elem.innerText = data;
         }).fail(function(err){
