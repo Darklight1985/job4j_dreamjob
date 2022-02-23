@@ -48,7 +48,8 @@ public class DbStoreTest {
     @Test
     public void whenCreateCan() {
         Store store = DbStore.instOf();
-        Candidate candidate = new Candidate(0, "Java Job");
+        store.deleteAllCandidates();
+        Candidate candidate = new Candidate(0, "Java Job", 1, LocalDateTime.now());
         store.save(candidate);
         Candidate canInDb = store.findCanById(candidate.getId());
         assertThat(canInDb.getName(), is(candidate.getName()));
@@ -57,8 +58,8 @@ public class DbStoreTest {
     @Test
     public void whenUpdateCandidate() {
         Store store = DbStore.instOf();
-        Candidate candidate = new Candidate(0, "Java Job");
-        Candidate candidateNew = new Candidate(1, "Java Work");
+        Candidate candidate = new Candidate(0, "Java Job", 1, LocalDateTime.now());
+        Candidate candidateNew = new Candidate(1, "Java Work", 1, LocalDateTime.now());
         store.save(candidate);
         store.save(candidateNew);
         Post postInDb = store.findById(candidateNew.getId());
@@ -68,9 +69,10 @@ public class DbStoreTest {
     @Test
     public void whenFindAllPCandidate() {
         Store store = DbStore.instOf();
+        store.deleteAllCandidates();
         List<Candidate> listOld = (List<Candidate>) store.findAllCandidates();
-        Candidate candidate = new Candidate(0, "Java Job");
-        Candidate candidateNew = new Candidate(0, "Java Work");
+        Candidate candidate = new Candidate(0, "Java Job", 1, LocalDateTime.now());
+        Candidate candidateNew = new Candidate(0, "Java Work", 1, LocalDateTime.now());
         store.save(candidate);
         store.save(candidateNew);
         List<Candidate> list = (List<Candidate>) store.findAllCandidates();

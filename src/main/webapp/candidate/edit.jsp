@@ -4,6 +4,8 @@
 <%@ page import="ru.job4j.dream.model.Candidate" %>
 <%@ page import="ru.job4j.dream.store.MemStore" %>
 <%@ page import="ru.job4j.dream.store.DbStore" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="ru.job4j.dream.model.City" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -20,15 +22,29 @@
           integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
           integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+  <script>
+    function addCan() {
+      let name = $('#name').val();
+      let messeng = "Не заполнены следующие данные: \n"
+      let warning = "";
+      if (name === "") {
+        warning += "Имя \n";
+      }
+      if (warning !== "") {
+        alert(messeng + warning);
+      }
+    }
+  </script>
   <title>Работа мечты</title>
 </head>
 <body>
 <%
   String id = request.getParameter("id");
-  Candidate can = new Candidate(0, "");
+  Candidate can = new Candidate(0, "", 1, LocalDateTime.now());
+  City city = new City(0, "");
   if (id != null) {
     can = DbStore.instOf().findCanById(Integer.valueOf(id));
+    city = DbStore.instOf().findCityById(can.getCityId());
   }
 %>
 <div class="container pt-3">
@@ -56,18 +72,22 @@
     <div class="card" style="width: 100%">
       <div class="card-header">
         <% if (id == null) { %>
-        Новая вакансия.
+        Новый кандидат.
         <% } else { %>
-        Редактирование вакансии.
+        Редактирование кандидата.
         <% } %>
       </div>
       <div class="card-body">
         <form action="<%=request.getContextPath()%>/candidates.do?id=<%=can.getId()%>" method="post">
           <div class="form-group">
             <label>Имя</label>
-            <input type="text" class="form-control" name="name" value="<%=can.getName()%>">
+            <input type="text" class="form-control" name="name" id="name" value="<%=can.getName()%>" required>
           </div>
-          <button type="submit" class="btn btn-primary">Сохранить</button>
+          <div class="form-group">
+            <label>Город</label>
+            <input type="text" class="form-control" name="city" id="city" value="<%=city.getName()%>" required>
+          </div>
+          <button type="submit" class="btn btn-primary" onclick="addCan()">Сохранить</button>
         </form>
       </div>
     </div>

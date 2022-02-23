@@ -1,6 +1,7 @@
 package ru.job4j.dream.store;
 
 import ru.job4j.dream.model.Candidate;
+import ru.job4j.dream.model.City;
 import ru.job4j.dream.model.Post;
 import ru.job4j.dream.model.User;
 
@@ -19,6 +20,8 @@ public interface Store {
 
     void save(User user);
 
+   void save(City city);
+
     Post findById(int id);
 
      Candidate findCanById(int id);
@@ -27,9 +30,15 @@ public interface Store {
 
     public User findUserByEmail(String email);
 
+    public City findCityByName(String nameCity);
+
+    public City findCityById(int id);
+
     void deletePost(int id);
 
      void deleteCan(int id);
 
     void deleteUser(int id);
+
+    public void deleteAllCandidates();
 }

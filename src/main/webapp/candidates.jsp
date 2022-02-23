@@ -59,6 +59,7 @@
                         <th scope="col">Фото</th>
                         <th scope="col">Добавить</th>
                         <th scope="col">Удалить</th>
+                        <th scope="col">Город</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -77,6 +78,9 @@
                             <td> <form action="<c:url value='/delete'/>" enctype="multipart/form-data">
                                 <button type="submit" name="name" value='${candidate.id}' class="btn btn-primary">Delete</button>
                             </form></td>
+                            <td>
+                                <c:out value="${candidate.cityId}"/>
+                            </td>
                         </tr>
                     </c:forEach>
                     </tbody>
