@@ -28,17 +28,11 @@ public class CandidateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        if (isNull(DbStore.instOf().findCityByName(req.getParameter("city")))) {
-            DbStore.instOf().save(new City(0, req.getParameter("city")));
-        }
         DbStore.instOf().save(
                 new Candidate(
                         Integer.valueOf(req.getParameter("id")),
                         req.getParameter("name"),
-                        Integer.valueOf(DbStore.instOf()
-                                .findCityByName(req
-                                        .getParameter("city"))
-                                .getId()),
+                        Integer.valueOf(req.getParameter("city")),
                         LocalDateTime.now()
                 )
         );

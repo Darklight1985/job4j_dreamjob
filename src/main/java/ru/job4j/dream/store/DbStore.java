@@ -116,6 +116,28 @@ public class DbStore implements Store {
     }
 
     @Override
+    public Collection<City> findAllCity() {
+        List<City> result = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM city;")
+        ) {
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    result.add(
+                            new City(
+                                    it.getInt("id"),
+                                    it.getString("name")
+                            )
+                    );
+                }
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    @Override
     public Collection<User> findAllUsers() {
         return null;
     }

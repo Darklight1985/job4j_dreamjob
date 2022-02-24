@@ -14,6 +14,8 @@ public interface Store {
 
     Collection<User> findAllUsers();
 
+    public Collection<City> findAllCity();
+
     void save(Post post);
 
     void save(Candidate candidate);

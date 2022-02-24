@@ -6,6 +6,7 @@
 <%@ page import="ru.job4j.dream.store.DbStore" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="ru.job4j.dream.model.City" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -35,16 +36,30 @@
       }
     }
   </script>
+  <script>
+    $(document).ready(function () {
+      $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/dreamjob/cities",
+        dataType: "json",
+        success: function (data) {
+          let cities = "";
+          for (let i = 0; i < data.length; i++) {
+            cities = "<option value=" + data[i]['id'] + ">" + data[i]['name'] + "</option>";
+            $('#city').append(cities)
+          }
+        }
+      })
+    })
+  </script>
   <title>Работа мечты</title>
 </head>
 <body>
 <%
   String id = request.getParameter("id");
   Candidate can = new Candidate(0, "", 1, LocalDateTime.now());
-  City city = new City(0, "");
   if (id != null) {
     can = DbStore.instOf().findCanById(Integer.valueOf(id));
-    city = DbStore.instOf().findCityById(can.getCityId());
   }
 %>
 <div class="container pt-3">
@@ -84,8 +99,10 @@
             <input type="text" class="form-control" name="name" id="name" value="<%=can.getName()%>" required>
           </div>
           <div class="form-group">
-            <label>Город</label>
-            <input type="text" class="form-control" name="city" id="city" value="<%=city.getName()%>" required>
+            <label for="city">Выберите город</label>
+            <select id="city" name="city" class="form-control">
+              <option>value="<c:out value="${can.cityId}"/></option>
+            </select>
           </div>
           <button type="submit" class="btn btn-primary" onclick="addCan()">Сохранить</button>
         </form>
