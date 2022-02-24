@@ -77,6 +77,36 @@ public class DbStore implements Store {
         return posts;
     }
 
+    @Override
+    public Collection<Post> findAllPostsDay() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime minusDay = now.minusDays(1);
+        List<Post> result = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement(
+                     "SELECT * FROM post "
+                             + "WHERE post.created between ? and ?")
+        ) {
+            ps.setTimestamp(1, Timestamp.valueOf(minusDay));
+            ps.setTimestamp(2, Timestamp.valueOf(now));
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    result.add(
+                            new Post(
+                                    it.getInt("id"),
+                                    it.getString("name"),
+                                    it.getString("description"),
+                                    it.getTimestamp("created").toLocalDateTime()
+                            )
+                    );
+                }
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
     public Collection<Candidate> findAllCandidates() {
         List<Candidate> candidates = new ArrayList<>();
         try (Connection cn = pool.getConnection();

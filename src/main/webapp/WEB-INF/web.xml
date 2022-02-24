@@ -70,6 +70,11 @@
     <servlet-class>ru.job4j.dream.servlet.CityServlet</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>CityJSPServlet</servlet-name>
+    <servlet-class>ru.job4j.dream.servlet.CityJSPServlet</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>PostServlet</servlet-name>
     <url-pattern>/posts.do</url-pattern>
@@ -130,14 +135,29 @@
     <url-pattern>/cities</url-pattern>
   </servlet-mapping>
 
+  <servlet-mapping>
+    <servlet-name>CityJSPServlet</servlet-name>
+    <url-pattern>/cities.do</url-pattern>
+  </servlet-mapping>
+
   <filter>
     <filter-name>AuthFilter</filter-name>
     <filter-class>ru.job4j.dream.filter.AuthFilter</filter-class>
   </filter>
 
+  <filter>
+    <filter-name>CORSFilter</filter-name>
+    <filter-class>ru.job4j.dream.filter.CORSFilter</filter-class>
+  </filter>
+
   <filter-mapping>
     <filter-name>AuthFilter</filter-name>
     <url-pattern>*.do</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>CORSFilter</filter-name>
+    <url-pattern>*</url-pattern>
   </filter-mapping>
 
 </web-app>

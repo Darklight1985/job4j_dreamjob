@@ -14,6 +14,8 @@ public interface Store {
 
     Collection<User> findAllUsers();
 
+    public Collection<Post> findAllPostsDay();
+
     public Collection<City> findAllCity();
 
     void save(Post post);
