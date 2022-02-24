@@ -104,6 +104,11 @@
               <option value="<c:out value="${DbStore.instOf().findCanById(param.id).cityId}"/>">
                 <c:out value="${DbStore.instOf().findCityById(DbStore.instOf().findCanById(param.id).cityId).name}"/>
               </option>
+                    <c:forEach items="${DbStore.instOf().findAllCity()}" var="city">
+                      <option value="<c:out value="${city.id}"/>">
+                        <c:out value="${city.name}"/>
+                      </option>
+                    </c:forEach>
             </select>
           </div>
           <button type="submit" class="btn btn-primary" onclick="addCan()">Сохранить</button>
