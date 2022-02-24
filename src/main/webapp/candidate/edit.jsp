@@ -45,7 +45,7 @@
         success: function (data) {
           let cities = "";
           for (let i = 0; i < data.length; i++) {
-            cities = "<option value=" + data[i]['id'] + ">" + data[i]['name'] + "</option>";
+            cities = "<option value=" + data[i]['id'] + ">" + data[i]['name'] + " ></option>";
             $('#city').append(cities)
           }
         }
@@ -101,7 +101,9 @@
           <div class="form-group">
             <label for="city">Выберите город</label>
             <select id="city" name="city" class="form-control">
-              <option>value="<c:out value="${can.cityId}"/></option>
+              <option value="<c:out value="${DbStore.instOf().findCanById(param.id).cityId}"/>">
+                <c:out value="${DbStore.instOf().findCityById(DbStore.instOf().findCanById(param.id).cityId).name}"/>
+              </option>
             </select>
           </div>
           <button type="submit" class="btn btn-primary" onclick="addCan()">Сохранить</button>

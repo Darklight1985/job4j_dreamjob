@@ -2,6 +2,7 @@
 <%@ page import="ru.job4j.dream.store.Store" %>
 <%@ page import="ru.job4j.dream.model.Candidate" %>
 <%@ page import="java.util.Collection" %>
+<%@ page import="ru.job4j.dream.store.DbStore" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
@@ -79,7 +80,7 @@
                                 <button type="submit" name="name" value='${candidate.id}' class="btn btn-primary">Delete</button>
                             </form></td>
                             <td>
-                                <c:out value="${candidate.cityId}"/>
+                                <c:out value="${DbStore.instOf().findCityById(candidate.cityId).name}"/>
                             </td>
                         </tr>
                     </c:forEach>

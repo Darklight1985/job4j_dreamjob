@@ -21,13 +21,13 @@ import static org.mockito.Mockito.*;
 
 public class CandidateServletTest {
 
-    @Ignore
     @Test
     public void whenCreateCandidate() throws IOException {
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse resp = mock(HttpServletResponse.class);
         Store store = DbStore.instOf();
         when(req.getParameter("id")).thenReturn("0");
+        when(req.getParameter("city")).thenReturn("1");
         when(req.getParameter("name")).thenReturn("name of new candidate");
         try {
             new CandidateServlet().doPost(req, resp);
