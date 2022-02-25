@@ -107,6 +107,63 @@ public class DbStore implements Store {
         return result;
     }
 
+    @Override
+    public Collection<Candidate> findAllCanDay() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime minusDay = now.minusDays(1);
+        List<Candidate> result = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement(
+                     "SELECT candidate.id, candidate.name, c.name as city, candidate.created from candidate "
+                             + "JOIN city c on candidate.cityId = c.id "
+                             + "WHERE candidate.created between ? and ?")
+        ) {
+            ps.setTimestamp(1, Timestamp.valueOf(minusDay));
+            ps.setTimestamp(2, Timestamp.valueOf(now));
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    result.add(
+                            new Candidate(
+                                    it.getInt("id"),
+                                    it.getString("name"),
+                                    it.getString("city"),
+                                    it.getTimestamp("created").toLocalDateTime()
+                            )
+                    );
+                }
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    @Override
+    public Collection<Candidate> findAllCanWithCity() {
+        List<Candidate> result = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement(
+                     "SELECT candidate.id, candidate.name, c.name as city, candidate.created from candidate "
+                             + "JOIN city c on candidate.cityId = c.id ")
+        ) {
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    result.add(
+                            new Candidate(
+                                    it.getInt("id"),
+                                    it.getString("name"),
+                                    it.getString("city"),
+                                    it.getTimestamp("created").toLocalDateTime()
+                            )
+                    );
+                }
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
     public Collection<Candidate> findAllCandidates() {
         List<Candidate> candidates = new ArrayList<>();
         try (Connection cn = pool.getConnection();
@@ -125,24 +182,6 @@ public class DbStore implements Store {
             LOG.debug("Exception: ", e.toString());
         }
         return candidates;
-    }
-
-    public Collection<City> findAllCityes() {
-        List<City> cityes = new ArrayList<>();
-        try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("SELECT * FROM city")
-        ) {
-            try (ResultSet it = ps.executeQuery()) {
-                while (it.next()) {
-                    cityes.add(new City(it.getInt("id"),
-                            it.getString("name")
-                    ));
-                }
-            }
-        } catch (Exception e) {
-            LOG.debug("Exception: ", e.toString());
-        }
-        return cityes;
     }
 
     @Override

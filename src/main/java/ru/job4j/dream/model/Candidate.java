@@ -8,12 +8,24 @@ public class Candidate {
     private String name;
     private int cityId;
     private LocalDateTime created;
+    private String cityName;
 
     public Candidate(int id, String name, int cityId, LocalDateTime created) {
         this.id = id;
         this.name = name;
         this.cityId = cityId;
         this.created = created;
+    }
+
+    public Candidate(int id, String name, String cityName, LocalDateTime created) {
+        this.id = id;
+        this.name = name;
+        this.created = created;
+        this.cityName = cityName;
+    }
+
+    public String getCityName() {
+        return cityName;
     }
 
     public LocalDateTime getCreated() {

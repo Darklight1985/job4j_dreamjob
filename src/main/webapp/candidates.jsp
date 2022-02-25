@@ -39,7 +39,7 @@
                 <a class="nav-link" href="<%=request.getContextPath()%>/post/edit.jsp">Добавить вакансию</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/candidate/edit.jsp">Добавить кандидата</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/cities.do">Добавить кандидата</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.name}"/> | Выйти</a>
@@ -67,7 +67,7 @@
                     <c:forEach items="${candidates}" var="candidate">
                         <tr>
                             <td>
-                                <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>
+                                <a href='<c:url value="/cities.do?id=${candidate.id}"/>'>
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
                                 <c:out value="${candidate.name}"/>
@@ -80,7 +80,7 @@
                                 <button type="submit" name="name" value='${candidate.id}' class="btn btn-primary">Delete</button>
                             </form></td>
                             <td>
-                                <c:out value="${DbStore.instOf().findCityById(candidate.cityId).name}"/>
+                                <c:out value="${candidate.cityName}"/>
                             </td>
                         </tr>
                     </c:forEach>

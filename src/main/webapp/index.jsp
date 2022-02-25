@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="ru.job4j.dream.store.Store" %>
 <%@ page import="ru.job4j.dream.model.Post" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -34,7 +35,7 @@
                 <a class="nav-link" href="<%=request.getContextPath()%>/post/edit.jsp">Добавить вакансию</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/candidate/edit.jsp">Добавить кандидата</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/cities.do">Добавить кандидата</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">Войти</a>
@@ -44,18 +45,66 @@
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Сегодняшние вакансии.
+                Ваканасии за сегодня
             </div>
             <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Названия</th>
+                        <th scope="col">Описание</th>
+                        <th scope="col">Дата</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${postsForDay}" var="post">
+                        <tr>
+                            <td>
+                                <c:out value="${post.name}"/>
+                            </td>
+                            <td>
+                                <c:out value="${post.description}"/>
+                            </td>
+                            <td>
+                                <c:out value="${post.created}"/>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-    <div class="row pt-3">
+    <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Сегодняшние кандидаты.
+                Кандидаты за сегодня
             </div>
             <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Имя</th>
+                        <th scope="col">Город</th>
+                        <th scope="col">Дата</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${cansForDay}" var="candidate">
+                        <tr>
+                            <td>
+                                <c:out value="${candidate.name}"/>
+                            </td>
+                            <td>
+                                <c:out value="${candidate.cityName}"/>
+                            </td>
+                            <td>
+                                <c:out value="${candidate.created}"/>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

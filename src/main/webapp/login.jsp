@@ -43,6 +43,7 @@
                             <c:out value="${error}"/>
                         </div>
                     </c:if>
+                    <div><br></div>
                 </form>
                 <form action="<c:url value='/reg.jsp'/>" method="post" enctype="multipart/form-data">
                     <button class="btn btn-primary">Регистрация</button>

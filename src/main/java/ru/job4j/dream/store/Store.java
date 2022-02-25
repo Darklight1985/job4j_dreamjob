@@ -16,7 +16,11 @@ public interface Store {
 
     public Collection<Post> findAllPostsDay();
 
+    public Collection<Candidate> findAllCanDay();
+
     public Collection<City> findAllCity();
+
+    public Collection<Candidate> findAllCanWithCity();
 
     void save(Post post);
 

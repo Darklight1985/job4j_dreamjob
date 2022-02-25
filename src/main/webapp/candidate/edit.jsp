@@ -35,19 +35,18 @@
         alert(messeng + warning);
       }
     }
-  </script>
-  <script>
     $(document).ready(function () {
       $.ajax({
         type: "GET",
         url: "http://localhost:8080/dreamjob/cities",
         dataType: "json",
         success: function (data) {
+          var jsondata = JSON.parse(data);
           let cities = "";
           for (let i = 0; i < data.length; i++) {
-            cities = "<option value=" + data[i]['id'] + ">" + data[i]['name'] + " ></option>";
-            $('#city').append(cities)
+            cities += "<option value=" + jsondata[i]['id'] + ">" + jsondata[i]['name'] + "</option>";
           }
+          $('#city option:last').after(cities);
         }
       })
     })
@@ -75,7 +74,7 @@
         <a class="nav-link" href="<%=request.getContextPath()%>/post/edit.jsp">Добавить вакансию</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<%=request.getContextPath()%>/candidate/edit.jsp">Добавить кандидата</a>
+        <a class="nav-link" href="<%=request.getContextPath()%>/candidates.do">Добавить кандидата</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.name}"/> | Выйти</a>
@@ -100,9 +99,9 @@
           </div>
           <div class="form-group">
             <label for="city">Выберите город</label>
-            <select id="city" name="city" class="form-control">
-              <option value="<c:out value="${DbStore.instOf().findCanById(param.id).cityId}"/>">
-                <c:out value="${DbStore.instOf().findCityById(DbStore.instOf().findCanById(param.id).cityId).name}"/>
+            <select id="city" name="city" class="custom-select">
+              <option value="<c:out value="${citycan.id}"/>">
+                <c:out value="${citycan.name}"/>
               </option>
                     <c:forEach items="${cities}" var="city">
                       <option value="<c:out value="${city.id}"/>">
