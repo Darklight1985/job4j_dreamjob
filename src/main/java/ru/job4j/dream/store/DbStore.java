@@ -8,11 +8,11 @@ import ru.job4j.dream.model.Post;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.dream.model.User;
@@ -81,6 +81,7 @@ public class DbStore implements Store {
     public Collection<Post> findAllPostsDay() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime minusDay = now.minusDays(1);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("eee, MMM dd. yyyy.\nHH:mm:ss a");
         List<Post> result = new ArrayList<>();
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement(
@@ -96,7 +97,7 @@ public class DbStore implements Store {
                                     it.getInt("id"),
                                     it.getString("name"),
                                     it.getString("description"),
-                                    it.getTimestamp("created").toLocalDateTime()
+                                    LocalDateTime.parse(it.getTimestamp("created").toLocalDateTime().format(dtf), dtf)
                             )
                     );
                 }
@@ -111,10 +112,12 @@ public class DbStore implements Store {
     public Collection<Candidate> findAllCanDay() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime minusDay = now.minusDays(1);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("eee, MMM dd. yyyy.\nHH:mm:ss a");
         List<Candidate> result = new ArrayList<>();
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement(
-                     "SELECT candidate.id, candidate.name, c.name as city, candidate.created from candidate "
+                     "SELECT candidate.id, candidate.name, c.name as city,"
+                             + " candidate.created from candidate "
                              + "JOIN city c on candidate.cityId = c.id "
                              + "WHERE candidate.created between ? and ?")
         ) {
@@ -127,7 +130,7 @@ public class DbStore implements Store {
                                     it.getInt("id"),
                                     it.getString("name"),
                                     it.getString("city"),
-                                    it.getTimestamp("created").toLocalDateTime()
+                                    LocalDateTime.parse(it.getTimestamp("created").toLocalDateTime().format(dtf), dtf)
                             )
                     );
                 }
@@ -143,7 +146,8 @@ public class DbStore implements Store {
         List<Candidate> result = new ArrayList<>();
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement(
-                     "SELECT candidate.id, candidate.name, c.name as city, candidate.created from candidate "
+                     "SELECT candidate.id, candidate.name, c.name as city, "
+                             + "candidate.created from candidate "
                              + "JOIN city c on candidate.cityId = c.id ")
         ) {
             try (ResultSet it = ps.executeQuery()) {
@@ -153,7 +157,8 @@ public class DbStore implements Store {
                                     it.getInt("id"),
                                     it.getString("name"),
                                     it.getString("city"),
-                                    it.getTimestamp("created").toLocalDateTime()
+                                    it.getTimestamp("created")
+                                            .toLocalDateTime()
                             )
                     );
                 }
