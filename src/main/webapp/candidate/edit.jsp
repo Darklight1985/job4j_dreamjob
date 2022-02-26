@@ -23,6 +23,7 @@
           integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
           integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
   <script>
     function addCan() {
       let name = $('#name').val();
@@ -34,6 +35,7 @@
       if (warning !== "") {
         alert(messeng + warning);
       }
+      return result;
     }
     $(document).ready(function () {
       $.ajax({
@@ -41,10 +43,10 @@
         url: "http://localhost:8080/dreamjob/cities",
         dataType: "json",
         success: function (data) {
-          var jsondata = JSON.parse(data);
-          let cities = "";
+          var cities = "";
+          var length = data.length;
           for (let i = 0; i < data.length; i++) {
-            cities += "<option value=" + jsondata[i]['id'] + ">" + jsondata[i]['name'] + "</option>";
+            cities += "<option value=" + data[i]['id'] + ">" + data[i]['name'] + "</option>";
           }
           $('#city option:last').after(cities);
         }
@@ -99,15 +101,10 @@
           </div>
           <div class="form-group">
             <label for="city">Выберите город</label>
-            <select id="city" name="city" class="custom-select">
+            <select class="custom-select" id="city" name="city">
               <option value="<c:out value="${citycan.id}"/>">
                 <c:out value="${citycan.name}"/>
               </option>
-                    <c:forEach items="${cities}" var="city">
-                      <option value="<c:out value="${city.id}"/>">
-                        <c:out value="${city.name}"/>
-                      </option>
-                    </c:forEach>
             </select>
           </div>
           <button type="submit" class="btn btn-primary" onclick="addCan()">Сохранить</button>
