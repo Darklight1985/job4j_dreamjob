@@ -1,5 +1,6 @@
 package ru.job4j.dream.model;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -9,6 +10,7 @@ public class Candidate {
     private int cityId;
     private LocalDateTime created;
     private String cityName;
+    private Timestamp creat;
 
     public Candidate(int id, String name, int cityId, LocalDateTime created) {
         this.id = id;
@@ -17,11 +19,19 @@ public class Candidate {
         this.created = created;
     }
 
-    public Candidate(int id, String name, String cityName, LocalDateTime created) {
+    public Candidate(int id, String name, String cityName, Timestamp created) {
         this.id = id;
         this.name = name;
-        this.created = created;
+        this.creat = created;
         this.cityName = cityName;
+    }
+
+    public Timestamp getCreat() {
+        return creat;
+    }
+
+    public void setCreat(Timestamp creat) {
+        this.creat = creat;
     }
 
     public String getCityName() {

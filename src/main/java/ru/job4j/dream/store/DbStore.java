@@ -81,7 +81,6 @@ public class DbStore implements Store {
     public Collection<Post> findAllPostsDay() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime minusDay = now.minusDays(1);
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("eee, MMM dd. yyyy.\nHH:mm:ss a");
         List<Post> result = new ArrayList<>();
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement(
@@ -97,7 +96,8 @@ public class DbStore implements Store {
                                     it.getInt("id"),
                                     it.getString("name"),
                                     it.getString("description"),
-                                    LocalDateTime.parse(it.getTimestamp("created").toLocalDateTime().format(dtf), dtf)
+                                    it.getTimestamp("created")
+                                            .toLocalDateTime()
                             )
                     );
                 }
@@ -112,7 +112,6 @@ public class DbStore implements Store {
     public Collection<Candidate> findAllCanDay() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime minusDay = now.minusDays(1);
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("eee, MMM dd. yyyy.\nHH:mm:ss a");
         List<Candidate> result = new ArrayList<>();
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement(
@@ -130,7 +129,7 @@ public class DbStore implements Store {
                                     it.getInt("id"),
                                     it.getString("name"),
                                     it.getString("city"),
-                                    LocalDateTime.parse(it.getTimestamp("created").toLocalDateTime().format(dtf), dtf)
+                                    it.getTimestamp("created")
                             )
                     );
                 }
@@ -158,7 +157,6 @@ public class DbStore implements Store {
                                     it.getString("name"),
                                     it.getString("city"),
                                     it.getTimestamp("created")
-                                            .toLocalDateTime()
                             )
                     );
                 }
