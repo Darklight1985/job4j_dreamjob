@@ -4,6 +4,7 @@
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="ru.job4j.dream.store.MemStore" %>
 <%@ page import="ru.job4j.dream.store.DbStore" %>
+<%@ page import="java.sql.Timestamp" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -43,7 +44,7 @@
 <body>
 <%
   String id = request.getParameter("id");
-  Post post = new Post(0, "", "", LocalDateTime.now());
+  Post post = new Post(0, "", "", new Timestamp(System.currentTimeMillis()));
   if (id != null) {
     post = DbStore.instOf().findById(Integer.valueOf(id));
   }

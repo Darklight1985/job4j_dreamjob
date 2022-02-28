@@ -1,5 +1,6 @@
 package ru.job4j.dream.model;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -8,9 +9,9 @@ public class Post {
     private int id;
     private String name;
     private String description;
-    private LocalDateTime created;
+    private Timestamp created;
 
-    public Post(int id, String name, String description, LocalDateTime created) {
+    public Post(int id, String name, String description, Timestamp created) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -41,11 +42,11 @@ public class Post {
         this.description = description;
     }
 
-    public LocalDateTime getCreated() {
+    public Timestamp getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
+    public void setCreated(Timestamp created) {
         this.created = created;
     }
 

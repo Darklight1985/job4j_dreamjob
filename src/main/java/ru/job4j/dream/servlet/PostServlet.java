@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class PostServlet extends HttpServlet {
@@ -29,7 +30,7 @@ public class PostServlet extends HttpServlet {
                 new Post(
                         Integer.valueOf(req.getParameter("id")),
                         req.getParameter("name"),
-                        req.getParameter("description"), LocalDateTime.now()
+                        req.getParameter("description"), new Timestamp(System.currentTimeMillis())
         )
         );
         resp.sendRedirect(req.getContextPath() + "/posts.do");

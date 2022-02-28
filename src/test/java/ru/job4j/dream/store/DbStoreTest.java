@@ -4,6 +4,7 @@ import org.junit.Test;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class DbStoreTest {
     @Test
     public void whenCreatePost() {
         Store store = DbStore.instOf();
-        Post post = new Post(0, "Java Job", "", LocalDateTime.now());
+        Post post = new Post(0, "Java Job", "", new Timestamp(System.currentTimeMillis()));
         store.save(post);
         Post postInDb = store.findById(post.getId());
         assertThat(postInDb.getName(), is(post.getName()));
@@ -25,8 +26,8 @@ public class DbStoreTest {
     @Test
     public void whenUpdatePost() {
         Store store = DbStore.instOf();
-        Post post = new Post(0, "Java Job", "", LocalDateTime.now());
-        Post postNew = new Post(1, "Java Work", "", LocalDateTime.now());
+        Post post = new Post(0, "Java Job", "", new Timestamp(System.currentTimeMillis()));
+        Post postNew = new Post(1, "Java Work", "", new Timestamp(System.currentTimeMillis()));
         store.save(post);
         store.save(postNew);
         Post postInDb = store.findById(postNew.getId());
@@ -37,8 +38,8 @@ public class DbStoreTest {
     public void whenFindAllPost() {
         Store store = DbStore.instOf();
         List<Post> listOld = (List<Post>) store.findAllPosts();
-        Post post = new Post(0, "Java Job", "", LocalDateTime.now());
-        Post postNew = new Post(0, "Java Work", "", LocalDateTime.now());
+        Post post = new Post(0, "Java Job", "", new Timestamp(System.currentTimeMillis()));
+        Post postNew = new Post(0, "Java Work", "", new Timestamp(System.currentTimeMillis()));
         store.save(post);
         store.save(postNew);
         List<Post> list = (List<Post>) store.findAllPosts();

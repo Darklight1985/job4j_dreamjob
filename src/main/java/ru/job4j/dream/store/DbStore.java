@@ -68,7 +68,7 @@ public class DbStore implements Store {
                 while (it.next()) {
                     posts.add(new Post(it.getInt("id"),
                             it.getString("name"), it.getString("description"),
-                            it.getTimestamp("created").toLocalDateTime()));
+                            it.getTimestamp("created")));
                 }
             }
         } catch (Exception e) {
@@ -97,7 +97,6 @@ public class DbStore implements Store {
                                     it.getString("name"),
                                     it.getString("description"),
                                     it.getTimestamp("created")
-                                            .toLocalDateTime()
                             )
                     );
                 }
@@ -256,7 +255,7 @@ public class DbStore implements Store {
         ) {
             ps.setString(1, post.getName());
             ps.setString(2, post.getDescription());
-            ps.setTimestamp(3, Timestamp.valueOf(post.getCreated()));
+            ps.setTimestamp(3, post.getCreated());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -342,7 +341,7 @@ public class DbStore implements Store {
         ) {
             ps.setString(1, post.getName());
             ps.setString(2, post.getDescription());
-            ps.setTimestamp(3, Timestamp.valueOf(post.getCreated()));
+            ps.setTimestamp(3, post.getCreated());
             ps.setInt(4, post.getId());
             ps.execute();
         } catch (Exception e) {
@@ -408,7 +407,7 @@ public class DbStore implements Store {
                 if (it.next()) {
                     return new Post(it.getInt("id"), it.getString("name"),
                             it.getString("description"),
-                            it.getTimestamp("created").toLocalDateTime());
+                            it.getTimestamp("created"));
                 }
             }
         } catch (Exception e) {

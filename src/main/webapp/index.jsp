@@ -72,7 +72,8 @@
                                 <c:out value="${post.description}"/>
                             </td>
                             <td>
-                                <c:out value="${post.created}"/>
+                                <fmt:formatDate type = "both"
+                                                dateStyle = "long" timeStyle = "long" value = "${post.created}" />
                             </td>
                         </tr>
                     </c:forEach>
